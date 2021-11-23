@@ -1,6 +1,6 @@
 import express from "express";
-import mongoose from "mongoose";;
-import foodRouter from "./routes/NLURoutes.js";
+import mongoose from "mongoose";
+import nluRouter from "./routes/NLURoutes.js";
 import cors from 'cors';
 const app = express();
 
@@ -17,10 +17,10 @@ mongoose.connect(
   }
 );
 //si la base de datos no existe Mongo la crea
-app.use(foodRouter);
+app.use(nluRouter);
 
 const PORT = process.env.PORT || 8080
 
 app.listen(PORT, () => {
-  console.log(`servidor escuchando en http://localhost:${PORT}`);
+  console.log(`Servidor escuchando en: http://localhost:${PORT}`);
 });
