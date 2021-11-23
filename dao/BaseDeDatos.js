@@ -30,6 +30,8 @@ class ErrorIdDoesNotExist extends Error {
     }
 }
 
+
+
 class BaseDeDatos {
     
     constructor(){
@@ -43,8 +45,9 @@ class BaseDeDatos {
 
     async get_nlu_structure_name (nombre) {        
         return this.NLUModel.findOne({name:nombre})
-        .lean().
-        then(result => { return result});
+        .lean()
+        .then(result => {return result})
+        .catch(e => {throw e});
     }//fin get por nombre
 
     
@@ -53,11 +56,12 @@ class BaseDeDatos {
                             .select("name")
                             .lean()
                             .then(result => {
+                                console.log(result != null);
                                 return result != null;
                             });
     }
   
-    // al id no tiene que ser nunca manipulado por el usuario
+    // el id no tiene que ser nunca manipulado por el usuario
     async nlu_structure_id_exists(id) {
 
         return this.NLUModel.findOne({ id: id })
@@ -95,6 +99,7 @@ class BaseDeDatos {
 
     async put_nlu_structure (name, text, id) {
     // el put tiene que ir dentro de un try catch para  que no tire error con el unique del nombre
+   
     try {
         if (id == null || id === '') {
             console.log("Error: ID vacía.");
@@ -119,8 +124,8 @@ class BaseDeDatos {
             throw new ErrorFieldIsEmpty("nombre y texto");
         }
         
-        let valores = await this.get_nlu_structure_name(name)
-        //await this.get_nlu_structure_name (name)
+        let valores = await this.get_nlu_structure_name(name);
+
         if (valores){
             if (valores.name == name & valores.text==text){
                 console.log("Error: " + name + " ya existe.");
@@ -142,8 +147,9 @@ class BaseDeDatos {
         });
 
         return nlu_structure;
-     }catch{
-        throw new ErrorNameAlreadyExists(name);
+     }catch(e){
+        //throw new ErrorNameAlreadyExists(name);
+        throw e;
      }
     } 
     //fin put
