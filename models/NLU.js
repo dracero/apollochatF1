@@ -19,4 +19,3 @@ const NLUSchema = new mongoose.Schema({
 const NLU = mongoose.model("NLU", NLUSchema);
 
 export default NLU;
-
