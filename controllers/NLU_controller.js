@@ -1,4 +1,5 @@
 import BaseDeDatos from "../dao/BaseDeDatos.js";
+
 let baseDeDatos = new BaseDeDatos();
 
 const get_nlu_structure = async (req, res, next) => {
@@ -6,6 +7,17 @@ const get_nlu_structure = async (req, res, next) => {
   
     try {
         res.send(nlu_structure);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
+// hay que agregar esta función para que busque por nombre
+const get_nlu_structure_name = async (req, res, next) => {
+    
+    try {
+        const nlu_structure = await baseDeDatos.get_nlu_structure_name(req.query.name);
+        res.send(nlu_structure);     
     } catch (error) {
         res.status(500).send(error);
     }
@@ -43,6 +55,7 @@ const delete_nlu_structure = async (req, res, next) => {
 
 export {
     get_nlu_structure,
+    get_nlu_structure_name,
     add_nlu_structure,
     put_nlu_structure,
     delete_nlu_structure

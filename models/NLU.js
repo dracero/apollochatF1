@@ -6,6 +6,7 @@ const NLUSchema = new mongoose.Schema({
       required: true,
       trim: true,
       lowercase: true,
+      unique: true //acá hay agregar esto para que sea único el nombre
   },
   text: {
       type: String,
@@ -18,4 +19,3 @@ const NLUSchema = new mongoose.Schema({
 const NLU = mongoose.model("NLU", NLUSchema);
 
 export default NLU;
-
