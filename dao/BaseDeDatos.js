@@ -43,7 +43,12 @@ class BaseDeDatos {
         return nlu_structure;
     }//fin get total
 
-    async get_nlu_structure_name (nombre) {        
+    async get_nlu_structure_name (nombre) {  
+        if (nombre == null || nombre === '') {
+            console.log("Error: nombre vacío.");
+            throw new ErrorFieldIsEmpty("nombre");
+        }
+        
         return this.NLUModel.findOne({name:nombre})
         .lean()
         .then(result => {return result})
@@ -139,7 +144,7 @@ class BaseDeDatos {
             await this.NLUModel.findByIdAndUpdate(id, JSON.parse(obj), {new: true},  function (err, nlu_structure) {
                 
                 if (err){
-                    console.log("Error: ", err.toString());
+                    console.log("Error: " + err.toString());
                 }
                 else{
                     console.log("Updated id: ", id);
