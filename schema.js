@@ -9,11 +9,18 @@ const typeDefs = gql`
     text: String
   }
 
+  type Response {
+    intent: Nlu
+    entity: Nlu
+    role: Nlu
+    trait: Nlu
+  }
+
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
   # case, the "nlus" query returns an array of zero or more Nlus (defined above).
   type Query {
-    nlus(name: String!): Nlu
+    nlus(intent: String!, entity: String!, role: String, trait: String!): Response
   }
 `;
 
